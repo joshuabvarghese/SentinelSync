@@ -1,0 +1,20 @@
+# SentinelSync - Core Dependencies
+# Production Dependencies
+
+# Configuration
+pyyaml==6.0.1
+
+# PostgreSQL
+psycopg2-binary==2.9.9
+
+# Kafka
+confluent-kafka==2.3.0
+
+# Cassandra
+cassandra-driver==3.29.0
+
+# Utilities
+python-dateutil==2.8.2
+
+# Development Dependencies (install with: pip install -r requirements-dev.txt)
+# We'll create this in a future PR
