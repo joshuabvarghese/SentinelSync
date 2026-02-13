@@ -1,0 +1,42 @@
+# SentinelSync Default Configuration
+# Override with environment variables or local.yaml
+
+# PostgreSQL Source Database
+postgres:
+  host: localhost
+  port: 5432
+  database: sourcedb
+  user: cdcuser
+  password: cdcpass
+  replication_slot: sentinelsync_slot
+  publication: sentinelsync_pub
+
+# Apache Kafka Message Broker
+kafka:
+  bootstrap_servers: localhost:9092
+  topic: cdc.events
+  group_id: sentinelsync-consumer
+  auto_offset_reset: earliest
+  enable_auto_commit: false
+  session_timeout_ms: 30000
+  max_poll_interval_ms: 300000
+  compression_type: snappy
+
+# Apache Cassandra Sink Database
+cassandra:
+  hosts:
+    - localhost
+  port: 9042
+  keyspace: sinkdb
+  replication_factor: 3
+  username: null
+  password: null
+  protocol_version: 4
+
+# Application Settings
+app:
+  log_level: INFO
+  metrics_port: 9090
+  health_check_port: 8080
+  max_retries: 5
+  retry_backoff_seconds: 2
