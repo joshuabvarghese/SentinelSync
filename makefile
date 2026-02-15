@@ -1,23 +1,25 @@
 # SentinelSync Makefile
 # Basic targets for development
 
-.PHONY: help install lint test clean
+.PHONY: help install lint test test-cov clean config-validate config-show
 
 help:
 	@echo "📋 SentinelSync Development Commands"
 	@echo ""
-	@echo "  make install     - Install Python dependencies"
-	@echo "  make lint        - Run code linters"
-	@echo "  make test        - Run unit tests"
-	@echo "  make test-cov    - Run tests with coverage"
-	@echo "  make clean       - Clean build artifacts"
+	@echo "  make install          - Install Python dependencies"
+	@echo "  make lint             - Run code linters"
+	@echo "  make test             - Run unit tests"
+	@echo "  make test-cov         - Run tests with coverage"
+	@echo "  make clean            - Clean build artifacts"
+	@echo "  make config-validate  - Validate configuration"
+	@echo "  make config-show      - Show configuration summary"
 	@echo ""
 
 install:
 	@echo "📦 Installing Python dependencies..."
 	pip install --upgrade pip
 	pip install -r requirements.txt
-	pip install black flake8 mypy pytest pytest-cov
+	pip install black flake8 mypy pytest pytest-cov pyyaml
 	@echo "✅ Dependencies installed!"
 
 lint:
@@ -42,7 +44,6 @@ clean:
 	find . -type d -name "__pycache__" -exec rm -rf {} +
 	find . -type f -name "*.pyc" -delete
 	find . -type f -name "*.pyo" -delete
-	find . -type f -name "*.pyd" -delete
 	find . -type f -name ".coverage" -delete
 	find . -type d -name "htmlcov" -exec rm -rf {} +
 	find . -type d -name ".pytest_cache" -exec rm -rf {} +
@@ -50,3 +51,12 @@ clean:
 	find . -type d -name "build" -exec rm -rf {} +
 	find . -type d -name "dist" -exec rm -rf {} +
 	@echo "✅ Clean complete!"
+
+config-validate:
+	@echo "🔍 Validating configuration..."
+	python -c "from src.config import get_config; config = get_config(); print('✅ Configuration valid!')"
+	@echo ""
+
+config-show:
+	@echo "📋 Configuration Summary:"
+	python -c "from src.config import get_config, print_config_summary; print_config_summary(get_config())"
